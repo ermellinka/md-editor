@@ -466,4 +466,3 @@ welcomeTabId = currentTabId;
 updateEditorFromTab();
 renderTabs();
 updateStatusBar();
-                                                                                                                            

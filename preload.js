@@ -7,4 +7,6 @@ contextBridge.exposeInMainWorld('mdApi', {
   saveFileAs: (filePath, content) => ipcRenderer.invoke('dialog:saveAs', { filePath, content }),
   onOpenPath: (callback) => ipcRenderer.on('open-path', (_event, data) => callback(data)),
   onCheckUnsaved: (callback) => ipcRenderer.on('check-unsaved', callback),
-  respondUnsaved: (isDirty) => ipcRenderer.send('unsaved-response', 
+  respondUnsaved: (isDirty) => ipcRenderer.send('unsaved-response', isDirty),
+  onSaveAndClose: (callback) => ipcRenderer.on('save-and-close', callback)
+});

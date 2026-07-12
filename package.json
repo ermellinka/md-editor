@@ -4,6 +4,11 @@
   "description": "A simple Markdown editor and viewer",
   "author": "Eugenia",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ermellinka/md-editor.git"
+  },
+  "homepage": "https://github.com/ermellinka/md-editor",
   "main": "main.js",
   "scripts": {
     "start": "electron .",

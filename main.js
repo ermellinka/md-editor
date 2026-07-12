@@ -150,4 +150,26 @@ if (!gotLock) {
   app.quit();
 } else {
   app.on('second-instance', (_event, argv) => {
-    // A second double-click on a .md file — open it i
+    // A second double-click on a .md file — open it in the existing window
+    if (!win) return;
+    if (win.isMinimized()) win.restore();
+    win.focus();
+    const file = fileFromArgv(argv);
+    if (file) {
+      win.webContents.send('open-path', {
+        path: file,
+        content: fs.readFileSync(file, 'utf-8')
+      });
+    }
+  });
+
+  app.whenReady().then(createWindow);
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+  });
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+}
