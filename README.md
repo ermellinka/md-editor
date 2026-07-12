@@ -4,6 +4,12 @@ A simple desktop app for reading and editing Markdown files, built with Electron
 
 ![MD Editor — rendered preview](docs/screenshot_1.png)
 
+## Download
+
+**[Download the latest installer for Windows](https://github.com/ermellinka/md-editor/releases/latest)** — no Git or Node.js required. Grab the `.exe` from the latest release, run it, and you're set. Double-clicking any `.md` file will open it in MD Editor.
+
+> Windows may show a SmartScreen warning because the app is not code-signed. Click "More info" -> "Run anyway".
+
 ## Features
 
 - **Live preview** — write on the left, see the rendered result on the right, with synchronized scrolling
