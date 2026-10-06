@@ -309,3 +309,46 @@ body {
   border-top: 2px solid var(--border);
   margin: 1.5em 0;
 }
+
+/* Linked panes and recovery/search controls */
+[hidden] { display: none !important; }
+#toolbar { flex-wrap: wrap; }
+.sync-option { display: inline-flex; align-items: center; font-size: 12px; white-space: nowrap; }
+#workspace { min-height: 0; --split-ratio: .5; --outline-width: 0px; }
+#workspace:has(#outline:not([hidden])) { --outline-width: 190px; }
+#editor-shell { position: relative; flex: 0 0 calc((100% - var(--outline-width) - 6px) * var(--split-ratio)); min-width: 0; background: var(--editor-bg); }
+#editor, #editor-backdrop {
+  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0;
+  padding: 20px 24px; border: 0; font: 14px/1.6 "Cascadia Code", Consolas, monospace;
+  white-space: pre-wrap; overflow-wrap: break-word; tab-size: 2; overflow: auto;
+  letter-spacing: normal;
+}
+#editor { z-index: 1; background: transparent; resize: none; }
+#editor-backdrop { color: transparent; pointer-events: none; user-select: none; }
+#editor-backdrop mark { color: transparent; background: rgba(224, 163, 30, .35); border-radius: 2px; }
+#preview { flex: 1 1 0; border-left: none; }
+#divider { flex: 0 0 6px; background: var(--border); cursor: col-resize; touch-action: none; }
+#divider:hover, #divider:focus-visible, #divider.dragging { background: var(--accent); }
+#workspace.preview-only #editor-shell, #workspace.preview-only #divider,
+#workspace.editor-only #preview, #workspace.editor-only #divider { display: none; }
+#workspace.editor-only #editor-shell { flex: 1; }
+.source-block { display: flow-root; border-radius: 4px; }
+.source-block.corresponding { background: rgba(224, 163, 30, .18); outline: 2px solid rgba(224, 163, 30, .45); outline-offset: -2px; }
+::highlight(source-selection) { background-color: #f6d365; color: #201a00; }
+#notice { display: flex; gap: 12px; align-items: center; padding: 8px 12px; background: #fff0c2; color: #352700; }
+#notice-text { flex: 1; }
+#notice button, #searchbar button { cursor: pointer; }
+#searchbar { padding: 8px 12px; background: var(--bg-panel); border-bottom: 1px solid var(--border); }
+.search-row { display: flex; gap: 8px; align-items: center; margin: 3px 0; }
+.search-row label { width: 60px; }
+.search-row input { flex: 1; max-width: 420px; min-width: 60px; }
+#searchbar input, #searchbar button { background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 4px; padding: 5px 8px; }
+#find-count { min-width: 55px; font-size: 12px; }
+#outline { width: 190px; flex-shrink: 0; overflow: auto; padding: 12px 0; border-right: 1px solid var(--border); background: var(--bg-panel); }
+#outline strong { padding: 0 10px; font-size: 13px; }
+#outline-list { margin-top: 10px; }
+#outline-list button { display: block; width: 100%; border: 0; text-align: left; padding: 6px 10px; background: transparent; color: var(--text); cursor: pointer; overflow-wrap: anywhere; }
+#outline-list button:hover { background: var(--btn-hover); }
+#status-file { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+#status-stats { flex-shrink: 0; margin-left: 12px; }
+button:focus-visible, .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }

@@ -1,12 +1,11 @@
 const { contextBridge, ipcRenderer } = require('electron');
-
 contextBridge.exposeInMainWorld('mdApi', {
   openFile: () => ipcRenderer.invoke('dialog:open'),
-  confirmCloseTab: (tabName) => ipcRenderer.invoke('dialog:confirm-close-tab', tabName),
-  saveFile: (filePath, content) => ipcRenderer.invoke('dialog:save', { filePath, content }),
-  saveFileAs: (filePath, content) => ipcRenderer.invoke('dialog:saveAs', { filePath, content }),
-  onOpenPath: (callback) => ipcRenderer.on('open-path', (_event, data) => callback(data)),
-  onCheckUnsaved: (callback) => ipcRenderer.on('check-unsaved', callback),
-  respondUnsaved: (isDirty) => ipcRenderer.send('unsaved-response', isDirty),
-  onSaveAndClose: (callback) => ipcRenderer.on('save-and-close', callback)
+  openLink: url => ipcRenderer.invoke('file:open-link', url),
+  openExternal: url => ipcRenderer.invoke('link:external', url),
+  confirmClose: name => ipcRenderer.invoke('dialog:confirm-close', name),
+  saveFile: data => ipcRenderer.invoke('dialog:save', data),
+  finishClose: ready => ipcRenderer.invoke('window:finish-close', ready),
+  onOpenPath: callback => ipcRenderer.on('open-path', (_event, data) => callback(data)),
+  onRequestClose: callback => ipcRenderer.on('request-close', () => callback())
 });

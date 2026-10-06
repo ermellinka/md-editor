@@ -12,7 +12,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "test": "node --test tests/file-store.test.js",
+    "test:renderer": "electron tests/renderer.cjs"
   },
   "dependencies": {
     "dompurify": "^3.1.6",
@@ -25,7 +27,7 @@
   "build": {
     "appId": "com.eugenia.mdeditor",
     "productName": "MD Editor",
-    "files": ["main.js", "preload.js", "renderer/**", "node_modules/marked/**", "node_modules/dompurify/**"],
+    "files": ["main.js", "preload.js", "file-store.js", "renderer/**", "node_modules/marked/**", "node_modules/dompurify/**"],
     "win": {
       "target": "nsis"
     },

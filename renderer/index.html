@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' file: https: http: data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'" />
   <title>MD Editor</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -37,6 +38,9 @@
     </div>
     <div class="spacer"></div>
     <div class="group">
+      <button id="btn-find" title="Find (Ctrl+F)">Find</button>
+      <button id="btn-outline" title="Document outline">Outline</button>
+      <label class="sync-option" title="Scroll both panes together"><input id="sync-scroll" type="checkbox" checked /> Sync</label>
       <button id="btn-edit" title="Enable editing">✏️ Edit</button>
       <button id="btn-mode" title="Mode: editor / split / preview">◧</button>
       <button id="btn-theme" title="Dark/light theme">🌙</button>
@@ -44,14 +48,24 @@
   </div>
 
   <div id="tabs-container">
-    <div id="tabs-list"></div>
+    <div id="tabs-list" role="tablist" aria-label="Documents"></div>
     <button id="tabs-new-btn" title="New tab">+</button>
   </div>
 
+  <div id="notice" role="alert" hidden><span id="notice-text"></span><button id="notice-close" aria-label="Dismiss message">×</button></div>
+  <div id="searchbar" hidden>
+    <div class="search-row"><label for="find-input">Find</label><input id="find-input" type="text" placeholder="Search Markdown" /><span id="find-count" aria-live="polite">0 / 0</span><button id="find-prev" title="Previous match">↑</button><button id="find-next" title="Next match">↓</button><button id="find-close" aria-label="Close search">×</button></div>
+    <div id="replace-row" class="search-row" hidden><label for="replace-input">Replace</label><input id="replace-input" type="text" /><button id="replace-one">Replace</button><button id="replace-all">Replace all</button></div>
+  </div>
   <div id="workspace" class="split">
-    <textarea id="editor" spellcheck="false"
-      placeholder="# Hello!&#10;&#10;Type something — the preview on the right updates automatically."></textarea>
-    <div id="preview" class="markdown-body"></div>
+    <aside id="outline" hidden aria-label="Document outline"><strong>Outline</strong><div id="outline-list"></div></aside>
+    <div id="editor-shell">
+      <pre id="editor-backdrop" aria-hidden="true"></pre>
+      <textarea id="editor" spellcheck="false" aria-label="Markdown source"
+        placeholder="# Hello!&#10;&#10;Type something — the preview on the right updates automatically."></textarea>
+    </div>
+    <div id="divider" role="separator" tabindex="0" aria-label="Resize editor and preview" aria-orientation="vertical" aria-valuemin="20" aria-valuemax="80" aria-valuenow="50"></div>
+    <div id="preview" class="markdown-body" tabindex="0" aria-label="Markdown preview"></div>
   </div>
 
   <div id="statusbar">
@@ -62,6 +76,7 @@
 
   <script src="../node_modules/marked/marked.min.js"></script>
   <script src="../node_modules/dompurify/dist/purify.min.js"></script>
+  <script src="source-preview.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
